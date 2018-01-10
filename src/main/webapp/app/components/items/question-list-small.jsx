@@ -1,7 +1,5 @@
 import React from 'react';
 import $ from 'jquery';
-import { t } from 'localizify';
-
 import declOfNum from '../../utils/number-dec';
 import timeAgo from '../../utils/time-ago';
 import formatText from '../../utils/format-str';
@@ -22,7 +20,7 @@ const QuestionListSmallItem = React.createClass({
         <span className="icon-a"></span>
         <span className="vote">{popular}</span>
         <Link to={`/questions/${id}`} className="question-hyperlink ">{title}</Link>
-        <span className="post-date"><span title="2008-10-09 15:59:11Z" className="relativetime">{t('Asked')} {timeAgo(created_at)}</span></span>
+        <span className="post-date"><span title="2008-10-09 15:59:11Z" className="relativetime">задан {timeAgo(created_at)}</span></span>
       </div>
     )
   }
@@ -35,7 +33,7 @@ const QuestionListSmall = React.createClass({
     const data = this.props.data;
 
     if (!data || !data.length) {
-      return ( <div>{t('User haven\'t questions yet')}</div> );
+      return ( <div>Пользователь не оставлял вопросов</div> );
     }
 
     return (

@@ -1,5 +1,4 @@
 import React from 'react';
-import { t } from 'localizify';
 
 import declOfNum from '../../utils/number-dec';
 import timeAgo from '../../utils/time-ago';
@@ -103,7 +102,7 @@ const Vote = React.createClass({
     
 
     return (
-      <div className="vote" title={ this.isOwnUser() ? t('You can\'t vote for own answer or question') : ''}>
+      <div className="vote" title={ this.isOwnUser() ? `Вы не можете голосовать за свой ответ или вопрос` : ``}>
           <a href="javascript:void(0);" onClick={this.up} className={classNameUp}>up vote</a>
           <span className="vote-count-post high-scored-post">{this.state.rating}</span>
           <a href="javascript:void(0);" onClick={this.down} className={classNameDown}>down vote</a>

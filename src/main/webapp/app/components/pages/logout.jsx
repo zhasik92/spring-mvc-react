@@ -1,6 +1,5 @@
 import React from 'react';
 import auth from '../../auth';
-import { t } from 'localizify';
 
 const LogoutPage = React.createClass({
   componentDidMount() {
@@ -9,7 +8,7 @@ const LogoutPage = React.createClass({
 
   render() {
     return (
-      <p>{t('You logout succesfully')}</p>
+      <p>Вы успешно вышли из системы</p>
     );
   }
 });

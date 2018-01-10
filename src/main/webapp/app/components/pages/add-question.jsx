@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter  } from 'react-router';
 import ReactDOM from 'react-dom';
-import { t } from 'localizify';
 
 import auth from '../../auth';
 import formatText from '../../utils/format-str';
@@ -177,26 +176,26 @@ const AddQuestionPage = withRouter(
 
       return (
         <div>
-          <h1>{t('Add question')}</h1>
+          <h1>Добавить вопрос</h1>
             <form onSubmit={this.handleSubmit}>
-              {t('Question name')}: <input ref="title" type="text" name="title" required="required" /><br />
-              {t('Description')}: <textarea onChange={this.onChangeAnswer} className="comment" ref="comment" name="comment" required="required" /><br />
+              Название вопроса: <input ref="title" type="text" name="title" required="required" /><br />
+              Описание: <textarea onChange={this.onChangeAnswer} className="comment" ref="comment" name="comment" required="required" /><br />
               <hr className="light" />
               <div className="preview"></div>
               <hr className="light" /> 
-              {t('Add tag')}: 
+              Добавить метку (тэг): 
               <input 
                 id="add-tag"
                 type="text"
                 ref='searched'
                 value={this.state.inputValue}
                 onChange={this.onChange}
-                placeholder={t('Type tag')} /> <a href="javascript:void(0);" onClick={this.addNewTag}>{t('Add new tag')}</a>
+                placeholder="Введите метку" /> <a href="javascript:void(0);" onClick={this.addNewTag}>Добавить новую метку</a>
               
               <TagsVariants onAddNewTag={this.onAddNewTag} data={this.state.findedTags} />
               <SelectedTags onTagClick={this.onTagClick} data={tags} />
               <br />
-              <button className="btn btn-block btn-social btn-github" type="submit">{t('Add question')}</button>
+              <button className="btn btn-block btn-social btn-github" type="submit">Добавить вопрос</button>
               {this.state.error && (
                 <p>{this.state.message}</p>
               )}
