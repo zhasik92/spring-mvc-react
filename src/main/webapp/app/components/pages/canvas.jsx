@@ -40,26 +40,35 @@ var CanvasPage = withRouter(React.createClass({
             {x: 8, y: 2, size: 1},
             {x: 9, y: 0, size: 1}
         ];
-        const selectedPointId = null;
-       /* const arc = d3.arc()
-            .innerRadius(0)
-            .outerRadius(5)
-            .startAngle(0)
-            .endAngle(Math.PI / 2);
-        const valueline = d3.line().curve(d3.curveBasis)	 		// <=== THERE IT IS!
-            .x(function(d) { return x(d.x); })
-            .y(function(d) { return y(d.y); });*/
+        const selectedPointId = 3;
+        /* const arc = d3.arc()
+             .innerRadius(0)
+             .outerRadius(5)
+             .startAngle(0)
+             .endAngle(Math.PI / 2);
+         const valueline = d3.line().curve(d3.curveBasis)	 		// <=== THERE IT IS!
+             .x(function(d) { return x(d.x); })
+             .y(function(d) { return y(d.y); });*/
         //arc();
         const r = 8;
         const cpoints = [];
-        for(let i =0; i < 101; i++ ){
-            let x = -r/2+((r/2)*(i/100));
-            cpoints.push({x:x ,y: Math.sqrt((r/2)*(r/2) - x*x) })
+
+        for (let i = 0; i < 201; i++) {
+            let x = -r  + ((r ) * (i / 201));
+            cpoints.push({x: x, y: Math.sqrt((r) * (r) - x * x)})
         }
-        const configuredCurve = d3.curveCatmullRom.alpha(1);
+        cpoints.push({x: 0, y: r / 2 - r / 200});
+        cpoints.push({x: 0, y: -r / 2});
+        cpoints.push({x: -r/200, y: -r / 2});
+
+        cpoints.push({x: -r/200, y: -r / 2});
+        cpoints.push({x: -r, y: -r / 2});
+        cpoints.push({x: -r, y: -r / 2+r/200});
+        cpoints.push({x: -r, y: 0});
+
+        const configuredCurve = d3.curveCatmullRomClosed.alpha(0.25);
         return (
-            <XYPlot height={600} width={600} xDomain={[-10, 10]} yDomain={[-10, 10]}>
-                <LineSeries data={data}/>
+            <XYPlot height={800} width={800} xDomain={[-10, 10]} yDomain={[-10, 10]}>
                 <VerticalGridLines/>
                 <HorizontalGridLines/>
                 <XAxis/>
@@ -79,8 +88,16 @@ var CanvasPage = withRouter(React.createClass({
                     sizeRange={[5, 13]}/>
                 <AreaSeries
                     className="area-series-example"
+                    color="#12939a"
                     curve={configuredCurve}
                     data={cpoints}/>
+                <AreaSeries
+                    className="area-elevated-series-2"
+                     color="#12939a"
+                    data={[
+                        {x: 0, y: -r, y0: 0},
+                        {x: r / 2, y: 0, y0: 0}
+                    ]}/>
             </XYPlot>
         );
     }
