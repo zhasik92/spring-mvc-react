@@ -147,10 +147,7 @@ public class QuestionController {
         result.setMsg(Long.toString(question.getId()));
 
         return result;
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setLocation(ucBuilder.path("/api/question/{id}").buildAndExpand(question.getId()).toUri());
-//        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-    }
+   }
 
 
 

@@ -2,6 +2,7 @@ import React        from 'react';
 import $            from 'jquery';
 import { Link } from 'react-router';
 import auth from '../auth';
+import d3 from 'd3-shape';
 
 import Header from './layout/header.jsx';
 import Footer from './layout/footer.jsx';

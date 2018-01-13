@@ -5,27 +5,18 @@ import com.mkyong.web.entity.*;
 import com.mkyong.web.entity.enums.VoteMark;
 import com.mkyong.web.jsonview.Views;
 import com.mkyong.web.model.AjaxResponseBody;
-import com.mkyong.web.model.AnswerModel;
-import com.mkyong.web.model.QuestionModel;
 import com.mkyong.web.model.VoteModel;
 import com.mkyong.web.service.*;
 import com.mkyong.web.service.UserService;
-import com.mkyong.web.service.impl.VoteServiceImpl;
 import com.mkyong.web.util.*;
-import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api")

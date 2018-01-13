@@ -10,41 +10,43 @@ import TagsPage from './pages/tags.jsx';
 import SignupPage from './pages/signup.jsx';
 import UserPage from './pages/user.jsx';
 import ChangePasswordPage from './pages/change-password.jsx';
-
+import CanvasPage from './pages/canvas';
 import HeaderLayout from './layout/header.jsx';
 import FooterLayout from './layout/footer.jsx';
 
 
 export {
-  HomePage,
-  ContactPage,
-  AddQuestionPage,
-  LoginPage,
-  LogoutPage,
-  DashboardPage,
-  HeaderLayout,
-  FooterLayout,
-  QuestionPage,
-  QuestionsByTagPage,
-  TagsPage,
-  SignupPage,
-  UserPage,
-  ChangePasswordPage
+    HomePage,
+    ContactPage,
+    CanvasPage,
+    AddQuestionPage,
+    LoginPage,
+    LogoutPage,
+    DashboardPage,
+    HeaderLayout,
+    FooterLayout,
+    QuestionPage,
+    QuestionsByTagPage,
+    TagsPage,
+    SignupPage,
+    UserPage,
+    ChangePasswordPage
 };
 
 export default {
-  HomePage,
-  ContactPage,
-  AddQuestionPage,
-  LoginPage,
-  LogoutPage,
-  DashboardPage,
-  HeaderLayout,
-  FooterLayout,
-  QuestionPage,
-  QuestionsByTagPage,
-  TagsPage,
-  SignupPage,
-  UserPage,
-  ChangePasswordPage
+    HomePage,
+    ContactPage,
+    CanvasPage,
+    AddQuestionPage,
+    LoginPage,
+    LogoutPage,
+    DashboardPage,
+    HeaderLayout,
+    FooterLayout,
+    QuestionPage,
+    QuestionsByTagPage,
+    TagsPage,
+    SignupPage,
+    UserPage,
+    ChangePasswordPage
 };
