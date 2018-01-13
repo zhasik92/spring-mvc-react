@@ -48,12 +48,6 @@ public class Point implements Serializable{
         this.area = area;
     }
 
-    public static boolean enter(double x, double y, double radius) {
-        return (x <= 0 && x >= -radius && y <= 0 && y >= -radius / 2 ||
-                x <= 0 && x >= -radius && y >= 0 && y <= radius && (Math.pow(x, 2) + Math.pow(y, 2)) <= Math.pow(radius, 2) ||
-                x >= 0 && x <= radius / 2 && y >= -radius && y <= 0 && (2 * x - y) <= radius);
-    }
-
     public int getId() {
         return id;
     }

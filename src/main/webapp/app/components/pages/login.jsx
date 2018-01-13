@@ -26,9 +26,11 @@ const LoginPage = withRouter(
                 const {location} = this.props
 
                 if (location.state && location.state.nextPathname) {
+                    console.log(location.state);
+                    console.log(location.state.nextPathname);
                     this.props.router.replace(location.state.nextPathname)
                 } else {
-                    this.props.router.replace('/')
+                    this.props.router.replace('/point')
                 }
             })
         },

@@ -15,20 +15,66 @@ import {
     MarkSeries
 } from 'react-vis';
 import {withRouter} from 'react-router';
-import Point from '../items/point';
-
+import PointService from '../../services/points';
 import auth from '../../auth';
 
 import UserSign from '../utils/user-sign';
 
 import formatText from '../../utils/format-str';
+class PointList extends React.Component{
+    render() {
+        var points = this.props.points.map(point =>
+            <Point key={point.id} point={point}/>
+        );
+        return (
+            <table>
+                <tbody>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>Radius</th>
+                    <th>Area</th>
+                </tr>
+                {points}
+                </tbody>
+            </table>
+        )
+    }
+}
 
+class Point extends React.Component{
+    render() {
+        return (
+            <tr>
+                <td>{this.props.point.x}</td>
+                <td>{this.props.point.y}</td>
+                <td>{this.props.point.radius}</td>
+                <td>{this.props.point.area + ""}</td>
+            </tr>
+        )
+    }
+}
 
 var CanvasPage = withRouter(React.createClass({
-
+    getInitialState() {
+        return {
+            data: [],
+            loading: true
+        };
+    },
+    componentDidMount() {
+        const service = new PointService();
+        service.get().then(points => {
+            this.setState({points, loading: false});
+        });
+    },
     render() {
+        if (this.state.loading) {
+            return ( <Loader isActive="true"/> );
+        }
+        const points = this.state.points;
         const {className, marginLeft, marginTop} = this.props;
-        const data = [
+        /*const data = [
             {x: 0, y: 8, size: 1},
             {x: 1, y: 5, size: 1},
             {x: 2, y: 4, size: 1},
@@ -39,7 +85,8 @@ var CanvasPage = withRouter(React.createClass({
             {x: 7, y: 3, size: 10},
             {x: 8, y: 2, size: 1},
             {x: 9, y: 0, size: 1}
-        ];
+        ];*/
+        const data = points.map((point, index) => ({x: point.x, y: point.y, size: point.radius}));
         const selectedPointId = 3;
         /* const arc = d3.arc()
              .innerRadius(0)
@@ -54,51 +101,55 @@ var CanvasPage = withRouter(React.createClass({
         const cpoints = [];
 
         for (let i = 0; i < 201; i++) {
-            let x = -r  + ((r ) * (i / 201));
+            let x = -r + ((r ) * (i / 201));
             cpoints.push({x: x, y: Math.sqrt((r) * (r) - x * x)})
         }
         cpoints.push({x: 0, y: r / 2 - r / 200});
         cpoints.push({x: 0, y: -r / 2});
-        cpoints.push({x: -r/200, y: -r / 2});
+        cpoints.push({x: -r / 200, y: -r / 2});
 
-        cpoints.push({x: -r/200, y: -r / 2});
+        cpoints.push({x: -r / 200, y: -r / 2});
         cpoints.push({x: -r, y: -r / 2});
-        cpoints.push({x: -r, y: -r / 2+r/200});
+        cpoints.push({x: -r, y: -r / 2 + r / 200});
         cpoints.push({x: -r, y: 0});
 
         const configuredCurve = d3.curveCatmullRomClosed.alpha(0.25);
         return (
-            <XYPlot height={800} width={800} xDomain={[-10, 10]} yDomain={[-10, 10]}>
-                <VerticalGridLines/>
-                <HorizontalGridLines/>
-                <XAxis/>
-                <YAxis/>
-                {/*<AreaSeries getNull={(d) => d.y !== null} onNearestX={this.onNearestX} data={DATA[0]} />*/}
-                <MarkSeries
-                    className="mark-series-example"
-                    colorType="literal"
-                    data={data.map((point, index) =>
-                        ({
-                            x: point.x,
-                            y: point.y,
-                            size: point.size,
-                            color: selectedPointId === index ? '#FF9833' : '#12939A'
-                        }))}
-                    onNearestXY={this._onNearestXY}
-                    sizeRange={[5, 13]}/>
-                <AreaSeries
-                    className="area-series-example"
-                    color="#12939a"
-                    curve={configuredCurve}
-                    data={cpoints}/>
-                <AreaSeries
-                    className="area-elevated-series-2"
-                     color="#12939a"
-                    data={[
-                        {x: 0, y: -r, y0: 0},
-                        {x: r / 2, y: 0, y0: 0}
-                    ]}/>
-            </XYPlot>
+            <div>
+                <XYPlot height={800} width={800} xDomain={[-10, 10]} yDomain={[-10, 10]}>
+                    <VerticalGridLines/>
+                    <HorizontalGridLines/>
+                    <XAxis/>
+                    <YAxis/>
+                    <AreaSeries
+                        className="area-series-example"
+                        color="#12939a"
+                        curve={configuredCurve}
+                        data={cpoints}/>
+                    <AreaSeries
+                        className="area-elevated-series-2"
+                        color="#12939a"
+                        data={[
+                            {x: 0, y: -r, y0: 0},
+                            {x: r / 2, y: 0, y0: 0}
+                        ]}/>
+                    <MarkSeries
+                        className="mark-series-example"
+                        colorType="literal"
+                        data={data.map((point, index) =>
+                            ({
+                                x: point.x,
+                                y: point.y,
+                                size: point.size,
+                                color: selectedPointId === index ? '#FF9833' : '#10523A'
+                            }))}
+                        onNearestXY={this._onNearestXY}
+                        sizeRange={[1, 13]}/>
+                </XYPlot>
+                <div>
+                    <PointList points={points}/>
+                </div>
+            </div>
         );
     }
 }));
