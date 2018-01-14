@@ -2,12 +2,9 @@ package com.mkyong.web.controller.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mkyong.web.entity.Point;
-import com.mkyong.web.entity.Question;
-import com.mkyong.web.entity.Tag;
 import com.mkyong.web.entity.User;
 import com.mkyong.web.jsonview.Views;
 import com.mkyong.web.model.AjaxResponseBody;
-import com.mkyong.web.model.QuestionModel;
 import com.mkyong.web.service.UserService;
 import com.mkyong.web.service.impl.PointService;
 import com.mkyong.web.util.AuthService;
@@ -23,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api")

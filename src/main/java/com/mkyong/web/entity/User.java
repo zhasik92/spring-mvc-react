@@ -5,6 +5,7 @@ import com.mkyong.web.jsonview.Views;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
@@ -14,12 +15,12 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(generator = "increment")
-    @GenericGenerator(name= "increment", strategy= "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id", length = 6, nullable = false)
     @JsonView(Views.Public.class)
     private long id;
 
-    @Column(name = "username", length = 64, unique=true)
+    @Column(name = "username", length = 64, unique = true)
     @JsonView(Views.Public.class)
     private String username;
 
@@ -39,12 +40,6 @@ public class User {
     @JsonView(Views.Public.class)
     private Integer popular;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<Question> questions;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<Answer> answers;
-
     @PrePersist
     protected void onCreate() {
         created_at = new Date();
@@ -59,24 +54,6 @@ public class User {
         this.created_at = created_at;
         this.status = status;
         this.popular = popular;
-    }
-
-    public User(String username, String password, Date created_at, String status, Integer popular, Set<Question> questions, Set<Answer> answers) {
-        this.username = username;
-        this.password = password;
-        this.created_at = created_at;
-        this.status = status;
-        this.popular = popular;
-        this.questions = questions;
-        this.answers = answers;
-    }
-
-    public Set<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(Set<Answer> answers) {
-        this.answers = answers;
     }
 
     public long getId() {
@@ -125,13 +102,5 @@ public class User {
 
     public void setPopular(Integer popular) {
         this.popular = popular;
-    }
-
-    public Set<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
     }
 }

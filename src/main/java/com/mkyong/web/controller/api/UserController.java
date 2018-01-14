@@ -2,7 +2,6 @@ package com.mkyong.web.controller.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mkyong.web.model.AjaxResponseBody;
-import com.mkyong.web.model.AnswerModel;
 import com.mkyong.web.model.ChangePasswordModel;
 import com.mkyong.web.util.AuthService;
 import com.mkyong.web.util.CustomErrorType;
@@ -54,8 +53,6 @@ public class UserController {
             return new ResponseEntity(new CustomErrorType("User with name " + name
                     + " not found"), HttpStatus.NOT_FOUND);
         }
-        user.setAnswers(null);
-        user.setQuestions(null);
         user.setPassword(null);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
@@ -69,8 +66,6 @@ public class UserController {
             return new ResponseEntity(new CustomErrorType("User with id " + id
                     + " not found"), HttpStatus.NOT_FOUND);
         }
-        user.setAnswers(null);
-        user.setQuestions(null);
         user.setPassword(null);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
@@ -82,7 +77,7 @@ public class UserController {
         if (userService.isUserExist(user)) {
             logger.error("Unable to create. A User with name {} already exist", user.getUsername());
             return new ResponseEntity(new CustomErrorType("Unable to create. A User with name " +
-                    user.getUsername() + " already exist."),HttpStatus.CONFLICT);
+                    user.getUsername() + " already exist."), HttpStatus.CONFLICT);
         }
         userService.addUser(user);
 
@@ -90,9 +85,6 @@ public class UserController {
         headers.setLocation(ucBuilder.path("/api/user/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
-
-
-
 
 
     @RequestMapping(value = "/user/changepassword", method = RequestMethod.POST)

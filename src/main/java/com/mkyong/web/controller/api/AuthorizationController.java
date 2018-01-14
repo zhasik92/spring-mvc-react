@@ -28,7 +28,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api")
 public class AuthorizationController {
-    public static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
+    public static final Logger logger = LoggerFactory.getLogger(AuthorizationController.class);
 
     @Value("${jwt.secret}")
     private String key;
