@@ -1,9 +1,8 @@
 import React from 'react';
 
-import UserService from '../../services/user';
 import Loader from '../utils/loader';
 import declOfNum from '../../utils/number-dec';
-
+import PointService from '../../services/points'
 var UserPage = React.createClass({
   getInitialState() {
     return {
@@ -15,15 +14,20 @@ var UserPage = React.createClass({
   componentDidMount() {
 
     const userName = this.props.params.name;
-    const service = new UserService();
-    service.getByUsername(userName).then(data => {
+    const service = new PointService();
+    service.get().then(data => {
       this.setState({ loading: false });
       if (!data) {
         return;
       }
-
-      data.questions = [];
-      data.answers = [];
+      let hitPoints = 0;
+      data.forEach( function (p) {
+          if(p.area){
+              hitPoints++;
+          }
+      });
+      data.hitted= hitPoints;
+      data.totalPoints = data.length;
       this.setState({ isExist: true });
       this.setState({ data });
     })
@@ -37,10 +41,8 @@ var UserPage = React.createClass({
       return ( <div><h2>Пользователя не существует</h2></div> );
     }
 
-    // console.log(this.state.data);
-    
-    const answers = this.state.data.answers || [];
-    const questions = this.state.data.questions || [];
+    const hitted = this.state.data.hitted;
+    const totalPoints = this.state.data.totalPoints;
 
 
     return (
@@ -48,17 +50,13 @@ var UserPage = React.createClass({
         <h2>{this.props.dashboard ? `Привет,` : `Страница пользователя`} {this.state.data.username}</h2>
         <div className="user-stats">
           <div className="row">
-              <div className="stat answers col-3">
-                  <span className="number">{questions.length}</span>
-                  {declOfNum(questions.length, [`вопрос`, `вопроса`, `вопросов`])}
+              <div className="stat points col-3">
+                  <span className="number">{hitted}</span>
+                  {declOfNum(hitted, [`Попадание`, `Попадания`, `Попадений`])}
               </div>
-              <div className="stat questions col-3">
-                  <span className="number">{answers.length}</span>
-                  {declOfNum(answers.length, [`ответ`, `ответа`, `ответов`])}
-              </div>
-              <div className="stat questions col-3">
-                  <span className="number">{this.state.data.popular}</span>
-                  {declOfNum(this.state.data.popular, [`репутация`, `репутация`, `репутация`])}
+              <div className="stat points col-3">
+                  <span className="number">{totalPoints}</span>
+                  {declOfNum(totalPoints, [`Попытка`, `Попытки`, `Попыток`])}
               </div>
           </div>
         </div>

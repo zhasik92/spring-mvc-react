@@ -38,8 +38,8 @@ const LoginPage = withRouter(
         render() {
             return (
                 <div>
-                    <div>LaboratoryWork#3
-                        By Kuznetsov Maxim Konstantinovich, var. 6685 </div>
+                    <div>LaboratoryWork#4
+                        By Kuznetsov Maxim Konstantinovich, var. 5866 </div>
                     <form onSubmit={this.handleSubmit}>
                         <label><input required="required" ref="username" placeholder="Логин"
                                       defaultValue="joe"/></label><br/>
