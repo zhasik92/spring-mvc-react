@@ -80,17 +80,4 @@ public class AuthorizationController {
 
         return new ResponseEntity(new LoginResponseBody(true, token), HttpStatus.OK);
     }
-
-/*    @JsonView(Views.Public.class)
-    @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getQuestion(@PathVariable("id") long id) {
-        logger.info("Fetching Question with id {}", id);
-        Question question = questionService.getById(id);
-        if (question == null) {
-            logger.error("Question with id {} not found.", id);
-            return new ResponseEntity(new CustomErrorType("Question with id " + id
-                    + " not found"), HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Question>(question, HttpStatus.OK);
-    }*/
 }

@@ -60,7 +60,7 @@ public class PointController {
     }
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/points", method = RequestMethod.GET)
-    public ResponseEntity<List<Point>> listAllQuestions() {
+    public ResponseEntity<List<Point>> listAllPoints() {
         List<Point> points = pointService.getAllPoints();
         if (points.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);

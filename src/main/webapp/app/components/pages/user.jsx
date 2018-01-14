@@ -1,14 +1,8 @@
 import React from 'react';
 
 import UserService from '../../services/user';
-import QuestionService from '../../services/question';
-import AnswerService from '../../services/answer';
-
 import Loader from '../utils/loader';
 import declOfNum from '../../utils/number-dec';
-
-import QuestionListSmall from '../items/question-list-small';
-import AnswerListSmall from '../items/answer-list-small';
 
 var UserPage = React.createClass({
   getInitialState() {
@@ -28,24 +22,10 @@ var UserPage = React.createClass({
         return;
       }
 
-      const questionService = new QuestionService();
-      const answerService = new AnswerService();
-
       data.questions = [];
       data.answers = [];
       this.setState({ isExist: true });
       this.setState({ data });
-
-
-      Promise.all([
-        questionService.getByUsername(userName),
-        answerService.getByUsername(userName),
-      ]).then(data => {
-        const newData = Object.assign({}, this.state.data);
-        newData.questions = data[0];
-        newData.answers = data[1];
-        this.setState({ data: newData });
-      });
     })
   },
   render() {
@@ -83,14 +63,6 @@ var UserPage = React.createClass({
           </div>
         </div>
         <div className="clear"></div>
-        <div className="margin-top-20">
-          <h2>Вопросы</h2>
-          <QuestionListSmall data={questions} />
-        </div>
-        {/*<div className="margin-top-20">
-          <h2>Ответы</h2>
-          <AnswerListSmall data={answers} />
-        </div>*/}
       </div>
     );
   }

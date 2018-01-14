@@ -7,16 +7,12 @@ import {
     HomePage,
     LoginPage,
     LogoutPage,
-    AddQuestionPage,
     CanvasPage,
     ContactPage,
     DashboardPage,
-    QuestionPage,
-    QuestionsByTagPage,
     SignupPage,
     UserPage,
     ChangePasswordPage,
-    TagsPage
 } from '../components/index.jsx';
 
 
@@ -34,17 +30,13 @@ export default (
         <IndexRoute component={HomePage}/>
 
         <Route path="/login" component={LoginPage}/>
+        <Route path="/point" component={CanvasPage}/>
         <Route path="/logout" component={LogoutPage} onEnter={requireAuth}/>
         <Route path="/signup" component={SignupPage}/>
 
-        <Route path="/questions/:id" component={QuestionPage}/>
-        <Route path="/point" component={CanvasPage}/>
-        <Route path="/questions/tagged/:name" component={QuestionsByTagPage}/>
 
         <Route path="/users/:name" component={UserPage}/>
 
-        <Route path="/add" component={AddQuestionPage} onEnter={requireAuth}/>
-        <Route path="/tags" component={TagsPage}/>
         <Route path="/dashboard" component={DashboardPage} onEnter={requireAuth}/>
 
         <Route path="/changepassword" component={ChangePasswordPage} onEnter={requireAuth}/>
