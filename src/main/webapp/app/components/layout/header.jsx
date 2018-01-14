@@ -9,13 +9,12 @@ var Header = React.createClass({
           <div className="header">
             <ul id="menu" className="menu">
               <li className="li logo">
-                <Link to="/" className="black south" activeClassName="active" title="export-default">
-                  <strong><i className="fa fa-bug" aria-hidden="true"></i> export-default
+                <Link to="/" className="black south" activeClassName="active" title="Лабораторная работа 4">
+                  <strong><i className="fa fa-bug" aria-hidden="true"></i> Лабораторная работа 4
                   </strong>
                 </Link>
               </li>
-              <li className="li"><Link to="/add" activeClassName="active"><u>Добавить</u></Link></li>
-              <li className="li"><Link to="/tags" activeClassName="active"><u>Теги</u></Link></li>
+              <li className="li"><Link to="/point" activeClassName="active"><u>Канвас</u></Link></li>
               <li className="li"><Link to="/dashboard" activeClassName="active"><u>Профиль</u></Link></li>
               <li title={"You are " + (this.props.loggedIn ? '' : 'not') + " logged in."} className="li right">  
                 {this.props.loggedIn ? (

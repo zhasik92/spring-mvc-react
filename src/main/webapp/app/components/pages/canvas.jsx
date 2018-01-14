@@ -18,9 +18,6 @@ import {withRouter} from 'react-router';
 import PointService from '../../services/points';
 import auth from '../../auth';
 
-import UserSign from '../utils/user-sign';
-
-import formatText from '../../utils/format-str';
 class PointList extends React.Component {
     render() {
         var points = this.props.points.map(point =>

@@ -1,5 +1,5 @@
 {
-  "name": "spring-mvc-react",
+  "name": "spring-rest-react",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Alexander Morgunov <fxl@list.ru>",
+  "author": "Maxim Kuznetsov <maximus1998g@mail.ru>",
   "license": "ISC",
   "dependencies": {
     "history": "^2.1.2",

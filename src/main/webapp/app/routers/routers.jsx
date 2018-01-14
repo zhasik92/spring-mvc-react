@@ -8,7 +8,6 @@ import {
     LoginPage,
     LogoutPage,
     CanvasPage,
-    ContactPage,
     DashboardPage,
     SignupPage,
     UserPage,
@@ -30,7 +29,7 @@ export default (
         <IndexRoute component={HomePage}/>
 
         <Route path="/login" component={LoginPage}/>
-        <Route path="/point" component={CanvasPage}/>
+        <Route path="/point" component={CanvasPage} onEnter={requireAuth}/>
         <Route path="/logout" component={LogoutPage} onEnter={requireAuth}/>
         <Route path="/signup" component={SignupPage}/>
 

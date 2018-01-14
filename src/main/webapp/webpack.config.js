@@ -28,11 +28,6 @@ const defaults = {
       'jQuery': 'jquery',
       'window.jQuery': 'jquery'
     })
-    // new HtmlWebpackPlugin({
-    //   template: path.join(__dirname, './app/index.html'),
-    //   filename: 'index.html',
-    //   inject: 'body'
-    // })
   ]
 };
 
