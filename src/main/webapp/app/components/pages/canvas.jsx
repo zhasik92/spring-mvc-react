@@ -67,8 +67,8 @@ var CanvasPage = withRouter(React.createClass({
             this.setState({points, loading: false});
         });
     },
-    handleSubmit(event, a, b, c, d) {
-        const {marginLeft, innerHeight, onBrushStart} = this.props;
+    handleSubmit(event) {
+        //const {marginLeft, innerHeight, onBrushStart} = this.props;
         const locationX = event.nativeEvent.offsetX - 40;
         const locationY = event.nativeEvent.offsetY - 10;
         const plotSizeInPixels = 800 - 50;
@@ -97,29 +97,8 @@ var CanvasPage = withRouter(React.createClass({
         }
         const points = this.state.points;
         const {className, marginLeft, marginTop} = this.props;
-        /*const data = [
-            {x: 0, y: 8, size: 1},
-            {x: 1, y: 5, size: 1},
-            {x: 2, y: 4, size: 1},
-            {x: 3, y: 9, size: 1},
-            {x: 4, y: 1, size: 1},
-            {x: 5, y: 7, size: 1},
-            {x: 6, y: 6, size: 12},
-            {x: 7, y: 3, size: 10},
-            {x: 8, y: 2, size: 1},
-            {x: 9, y: 0, size: 1}
-        ];*/
         const data = points.map((point, index) => ({x: point.x, y: point.y, size: point.radius}));
         const selectedPointId = 3;
-        /* const arc = d3.arc()
-             .innerRadius(0)
-             .outerRadius(5)
-             .startAngle(0)
-             .endAngle(Math.PI / 2);
-         const valueline = d3.line().curve(d3.curveBasis)	 		// <=== THERE IT IS!
-             .x(function(d) { return x(d.x); })
-             .y(function(d) { return y(d.y); });*/
-        //arc();
         const r = 8;
         const cpoints = [];
 
@@ -173,7 +152,7 @@ var CanvasPage = withRouter(React.createClass({
                                 size: point.size,
                                 color: selectedPointId === index ? '#FF9833' : '#10523A'
                             }))}
-                        onNearestXY={this._onNearestXY}
+                        // onNearestXY={this._onNearestXY}
                         sizeRange={[1, 13]}/>
                 </XYPlot>
                 <div>
