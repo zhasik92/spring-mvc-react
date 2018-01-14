@@ -21,7 +21,7 @@ import auth from '../../auth';
 import UserSign from '../utils/user-sign';
 
 import formatText from '../../utils/format-str';
-class PointList extends React.Component{
+class PointList extends React.Component {
     render() {
         var points = this.props.points.map(point =>
             <Point key={point.id} point={point}/>
@@ -42,7 +42,7 @@ class PointList extends React.Component{
     }
 }
 
-class Point extends React.Component{
+class Point extends React.Component {
     render() {
         return (
             <tr>
@@ -56,10 +56,12 @@ class Point extends React.Component{
 }
 
 var CanvasPage = withRouter(React.createClass({
+
     getInitialState() {
         return {
             data: [],
-            loading: true
+            loading: true,
+            r: 8
         };
     },
     componentDidMount() {
@@ -67,6 +69,30 @@ var CanvasPage = withRouter(React.createClass({
         service.get().then(points => {
             this.setState({points, loading: false});
         });
+    },
+    handleSubmit(event, a, b, c, d) {
+        const {marginLeft, innerHeight, onBrushStart} = this.props;
+        const locationX = event.nativeEvent.offsetX - 40;
+        const locationY = event.nativeEvent.offsetY - 10;
+        const plotSizeInPixels = 800 - 50;
+        const plotCenterInPixels = 375;
+        const x = 20 *((locationX- plotCenterInPixels) / plotSizeInPixels);
+        const y = 20 *((plotCenterInPixels-locationY)/ plotSizeInPixels);
+        const radius = 3;
+        $.ajax({
+            type: 'POST',
+            url: `${window.config.basename}/api/point`,
+            contentType: 'application/json',
+            data: JSON.stringify({x, y, radius, token: auth.getToken()}),
+            success: data => {
+                this.componentDidMount();
+            },
+            error: (xhr, status, err) => {
+                console.error(status, err.toString());
+            }
+        });
+
+        return false;
     },
     render() {
         if (this.state.loading) {
@@ -116,7 +142,14 @@ var CanvasPage = withRouter(React.createClass({
         const configuredCurve = d3.curveCatmullRomClosed.alpha(0.25);
         return (
             <div>
-                <XYPlot height={800} width={800} xDomain={[-10, 10]} yDomain={[-10, 10]}>
+                <XYPlot
+                    height={800}
+                    width={800}
+                    xDomain={[-10, 10]}
+                    yDomain={[-10, 10]}
+                    onMouseDown={this.handleSubmit}
+                    marginLeft={0}
+                >
                     <VerticalGridLines/>
                     <HorizontalGridLines/>
                     <XAxis/>
