@@ -71,12 +71,16 @@ var CanvasPage = withRouter(React.createClass({
     },
     handleSubmit(event) {
         //const {marginLeft, innerHeight, onBrushStart} = this.props;
-        const locationX = event.nativeEvent.offsetX - 40;
-        const locationY = event.nativeEvent.offsetY - 10;
+        //TODO try to use ScaleUtils
+        const locationX = event.nativeEvent.layerX  - 40;
+        const locationY = event.nativeEvent.layerY  - 10;
         const plotSizeInPixels = 800 - 50;
         const plotCenterInPixels = 375;
         const x = 20 * ((locationX - plotCenterInPixels) / plotSizeInPixels);
         const y = 20 * ((plotCenterInPixels - locationY) / plotSizeInPixels);
+       // const scaledX = ScaleUtils.getAttributeScale(this.props,'x');
+       // const scaledY = ScaleUtils.getAttributeScale(this.props,'y');
+
         const radius = this.state.r;
         $.ajax({
             type: 'POST',
