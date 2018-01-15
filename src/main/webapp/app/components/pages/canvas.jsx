@@ -2,7 +2,7 @@ import React from 'react';
 import Loader from '../utils/loader';
 import $ from 'jquery';
 import * as d3 from "d3-shape";
-
+import {detect} from "detect-browser";
 
 import {
     XYPlot,
@@ -70,14 +70,17 @@ var CanvasPage = withRouter(React.createClass({
         });
     },
     handleSubmit(event) {
+        const browser = detect().name;
         //const {marginLeft, innerHeight, onBrushStart} = this.props;
         //TODO try to use ScaleUtils
-        const locationX = event.nativeEvent.layerX  - 40;
-        const locationY = event.nativeEvent.layerY  - 10;
+        const nativeEvent = event.nativeEvent;
+        const locationX = (browser =='firefox' ? event.nativeEvent.layerX: event.nativeEvent.offsetX)  - 40;
+        const locationY = (browser =='firefox' ? event.nativeEvent.layerY: event.nativeEvent.offsetY)  - 10;
         const plotSizeInPixels = 800 - 50;
         const plotCenterInPixels = 375;
         const x = 20 * ((locationX - plotCenterInPixels) / plotSizeInPixels);
         const y = 20 * ((plotCenterInPixels - locationY) / plotSizeInPixels);
+        console.log(browser);
        // const scaledX = ScaleUtils.getAttributeScale(this.props,'x');
        // const scaledY = ScaleUtils.getAttributeScale(this.props,'y');
 
