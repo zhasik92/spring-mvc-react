@@ -2,6 +2,8 @@ import React from 'react';
 import Loader from '../utils/loader';
 import $ from 'jquery';
 import * as d3 from "d3-shape";
+
+
 import {
     XYPlot,
     XAxis,
@@ -58,7 +60,7 @@ var CanvasPage = withRouter(React.createClass({
         return {
             data: [],
             loading: true,
-            r: 8
+            r: 5
         };
     },
     componentDidMount() {
@@ -73,9 +75,9 @@ var CanvasPage = withRouter(React.createClass({
         const locationY = event.nativeEvent.offsetY - 10;
         const plotSizeInPixels = 800 - 50;
         const plotCenterInPixels = 375;
-        const x = 20 *((locationX- plotCenterInPixels) / plotSizeInPixels);
-        const y = 20 *((plotCenterInPixels-locationY)/ plotSizeInPixels);
-        const radius = 3;
+        const x = 20 * ((locationX - plotCenterInPixels) / plotSizeInPixels);
+        const y = 20 * ((plotCenterInPixels - locationY) / plotSizeInPixels);
+        const radius = this.state.r;
         $.ajax({
             type: 'POST',
             url: `${window.config.basename}/api/point`,
@@ -91,15 +93,39 @@ var CanvasPage = withRouter(React.createClass({
 
         return false;
     },
+    buttonClick(radius, e) {
+        this.state.r = radius;
+        this.componentDidMount();
+        return false;
+    },
+    isInArea(x, y, radius) {
+        return ((radius >= 2 * x - y) && x >= 0 && y <= 0) ||
+            (x <= 0 && y <= 0 && x >= -radius && y >= -radius / 2) ||
+            (x <= 0 && y >= 0 && ((x * x + y * y) <= radius * radius));
+    },
+    deleteAll(e) {
+        $.ajax({
+            type: 'POST',
+            url: `${window.config.basename}/api/remove`,
+            contentType: 'application/json',
+            success: data => {
+                this.componentDidMount();
+            },
+            error: (xhr, status, err) => {
+                console.error(status, err.toString());
+            }
+        });
+    },
     render() {
         if (this.state.loading) {
             return ( <Loader isActive="true"/> );
         }
-        const points = this.state.points;
+        const points = this.state.points || [];
+
         const {className, marginLeft, marginTop} = this.props;
-        const data = points.map((point, index) => ({x: point.x, y: point.y, size: point.radius}));
+        const data = points.map((point, index) => ({x: point.x, y: point.y, radius: this.state.r}));
         const selectedPointId = 3;
-        const r = 8;
+        const r = this.state.r;
         const cpoints = [];
 
         for (let i = 0; i < 201; i++) {
@@ -132,12 +158,12 @@ var CanvasPage = withRouter(React.createClass({
                     <YAxis/>
                     <AreaSeries
                         className="area-series-example"
-                        color="#12939a"
+                        color="#66ffcc"
                         curve={configuredCurve}
                         data={cpoints}/>
                     <AreaSeries
                         className="area-elevated-series-2"
-                        color="#12939a"
+                        color="#66ffcc"
                         data={[
                             {x: 0, y: -r, y0: 0},
                             {x: r / 2, y: 0, y0: 0}
@@ -149,12 +175,21 @@ var CanvasPage = withRouter(React.createClass({
                             ({
                                 x: point.x,
                                 y: point.y,
-                                size: point.size,
-                                color: selectedPointId === index ? '#FF9833' : '#10523A'
+                                radius: this.state.r,
+                                color: this.isInArea(point.x, point.y, this.state.r) == true ? '#ffffff' : '#cc3300'
                             }))}
                         // onNearestXY={this._onNearestXY}
-                        sizeRange={[1, 13]}/>
+                        //sizeRange={[1, 13]}
+                    />
                 </XYPlot>
+                <button type="button" onClick={(e) => this.buttonClick(3, e)}>3</button>
+                <button type="button" onClick={(e) => this.buttonClick(4, e)}>4</button>
+                <button type="button" onClick={(e) => this.buttonClick(5, e)}>5</button>
+                <button type="button" onClick={(e) => this.buttonClick(6, e)}>6</button>
+                <button type="button" onClick={(e) => this.buttonClick(7, e)}>7</button>
+                <button type="button" onClick={this.deleteAll}>Delete all</button>
+
+
                 <div>
                     <PointList points={points}/>
                 </div>

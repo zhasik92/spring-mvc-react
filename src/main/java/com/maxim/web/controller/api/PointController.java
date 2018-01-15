@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -67,5 +68,10 @@ public class PointController {
          }
         return new ResponseEntity<List<Point>>(points, HttpStatus.OK);
     }
-
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    public ResponseEntity<List<Point>> removeAll() {
+        pointService.removeAll();
+        return new ResponseEntity<List<Point>>(Collections.emptyList(), HttpStatus.OK);
+    }
 }

@@ -29,4 +29,8 @@ public class PointService{
         return pointRepository.findAll();
     }
 
+    public void removeAll(){
+        pointRepository.deleteAll();
+    }
+
 }
